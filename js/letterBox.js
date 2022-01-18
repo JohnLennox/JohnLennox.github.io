@@ -1,9 +1,10 @@
 class LetterBox {
 
-    constructor(x, y, res, targetWord) {
+    constructor(x, y, resX, resY, targetWord) {
         this.x = x;
         this.y = y;
-        this.res = res;
+        this.resX = resX;
+        this.resY = resY;
         this.letter = '';
         this.targetLetter = targetWord.charAt(this.x);
         this.targetWord = targetWord;
@@ -12,9 +13,10 @@ class LetterBox {
     show() {
         stroke(1);
         this.getColour()
-        rect(this.x * this.res, this.y * this.res, this.res, this.res);
+        rect(this.x * this.resX, this.y * this.resY, this.resX, this.resY);
         fill(0);
-        text(this.letter, this.x * this.res + this.res / 2, this.y * this.res + this.res / 2);
+        textSize(32)
+        text(this.letter, this.x * this.resX + this.resX / 2, this.y * this.resY + this.resY / 2);
     }
 
     setLetter(letter) {

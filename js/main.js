@@ -2,7 +2,8 @@ let gridLength;
 let gridWidth;
 let currentWordIndex;
 let grid;
-let res = 50;
+let resX;
+let resy;
 let targetWord = "";
 let file;
 let lettersUsed;
@@ -13,9 +14,11 @@ function preload() {
 }
 
 function setup() {
+    resX = windowWidth / 2 / 5;
+    resy = windowHeight / 2 / 5;
     myModal = document.getElementById('myModal')
     lettersUsed = new Array();
-    let canvas = createCanvas(250, 250);
+    let canvas = createCanvas(windowWidth / 2, windowHeight / 2);
     canvas.parent('canvasContainer');
     canvas.id('mycanvas');
     gridLength = 5;
@@ -25,7 +28,7 @@ function setup() {
     createTargetWord();
     for (let i = 0; i < gridWidth; i++) {
         for (let j = 0; j < gridLength; j++) {
-            let letterBox = new LetterBox(i, j, res, targetWord);
+            let letterBox = new LetterBox(i, j, resX, resy, targetWord);
             grid[i][j] = letterBox;
         }
     }
@@ -114,7 +117,7 @@ function processWord(word) {
 }
 
 function submit() {
-    let currentWord = document.getElementById('word').value;
+    let currentWord = document.getElementById('word').value.toLowerCase();
     if (validateWord(currentWord)) {
         hideErrorMessage();
         processWord(currentWord);
