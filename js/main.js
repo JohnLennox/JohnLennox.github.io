@@ -14,15 +14,16 @@ function preload() {
 }
 
 function setup() {
-    resX = windowWidth / 2 / 5;
-    resy = windowHeight / 2 / 5;
     myModal = document.getElementById('myModal')
     lettersUsed = new Array();
     let canvas = createCanvas(windowWidth / 2, windowHeight / 2);
     canvas.parent('canvasContainer');
     canvas.id('mycanvas');
-    gridLength = 5;
+    gridLength = 6;
     gridWidth = 5;
+    resX = windowWidth / 2 / gridWidth;
+    resy = windowHeight / 2 / gridLength;
+
     grid = makeGrid(gridLength, gridWidth);
     currentWordIndex = 0;
     createTargetWord();
@@ -56,10 +57,6 @@ function draw() {
             grid[i][j].show();
         }
     }
-    if (currentWordIndex === gridLength) {
-        fail();
-        disableSubmitButton();
-    }
 }
 
 function disableSubmitButton() {
@@ -92,8 +89,8 @@ function hideErrorMessage() {
 }
 
 function validateWord(word) {
-    if (word.length !== gridLength) {
-        setErrorMessage("Word must be " + gridLength + " letters long");
+    if (word.length !== gridWidth) {
+        setErrorMessage("Word must be " + gridWidth + " letters long");
         return false;
     }
     if ((/\d/.test(word))) {
@@ -109,7 +106,7 @@ function validateWord(word) {
 
 function processWord(word) {
     let wordArray = word.split('');
-    for (let i = 0; i < gridLength; i++) {
+    for (let i = 0; i < gridWidth; i++) {
         let currentLetter = grid[i][currentWordIndex];
         currentLetter.setLetter(wordArray[i]);
     }
@@ -129,6 +126,11 @@ function submit() {
         }
     } else {
         showErrorMessage();
+    }
+
+    if (currentWordIndex === gridLength && !targetWord.includes(currentWord)) {
+        fail();
+        disableSubmitButton();
     }
     document.getElementById('word').value = "";
 }
