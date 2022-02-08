@@ -9,6 +9,8 @@ let file;
 let lettersUsed;
 let myModal;
 
+let solver;
+
 function preload() {
     file = loadStrings("resources/dictionary.txt");
 }
@@ -33,6 +35,8 @@ function setup() {
             grid[i][j] = letterBox;
         }
     }
+
+    solver = new Solver(file);
 }
 
 function createTargetWord() {
@@ -109,6 +113,9 @@ function processWord(word) {
     for (let i = 0; i < gridWidth; i++) {
         let currentLetter = grid[i][currentWordIndex];
         currentLetter.setLetter(wordArray[i]);
+
+        solver.receiveLetter(currentLetter.getLetter(), currentLetter.getStatus(), currentLetter.x);
+
     }
     currentWordIndex++;
 }

@@ -8,6 +8,8 @@ class LetterBox {
         this.letter = '';
         this.targetLetter = targetWord.charAt(this.x);
         this.targetWord = targetWord;
+        this.isCorrect = "incorrect";
+        this.colour = undefined;
     }
 
     show() {
@@ -21,23 +23,39 @@ class LetterBox {
 
     setLetter(letter) {
         this.letter = letter;
+        if (this.targetLetter === this.letter) {
+            this.isCorrect = "correctLocation";
+        } else {
+            this.checkOtherLetters()
+        }
+    }
+
+    getLetter() {
+        return this.letter;
     }
 
     getColour() {
-        if (this.targetLetter === this.letter) {
+        if (this.isCorrect === "correctLocation") {
             fill(0, 255, 0)
+        }else if (this.isCorrect === "correct") {
+            fill(255, 215, 0)
         } else {
-            this.checkOtherLetters();
+            fill(255)
         }
+    }
+
+    getStatus() {
+        return this.isCorrect;
     }
 
     checkOtherLetters() {
         let found = false;
         for (let i = 0; i < this.targetWord.length; i++) {
             if (targetWord.charAt(i) === this.letter) {
-                fill(255, 215, 0)
                 found = true;
+                this.isCorrect = "correct";
             } else {
+                this.isCorrect = "incorrect";
                 fill(255)
             }
             if (found) {
